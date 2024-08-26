@@ -15,6 +15,7 @@ class AppUtils:
     voice_dropdown: List[Dict[str, str]]
     convo_path_dropdown_value: str
     convo_path_dropdown_options: List[Dict[str, str]]
+    response_voice_dropdown_value: str
     new_convo_path_name: str
 
     # Data storage
@@ -102,7 +103,7 @@ class AppUtils:
                 if text != "":
                     self.table_data[idx]["Assistant Response Recording"] = "recording"
                     self.recording_store[self.convo_path_dropdown_value][idx] = (
-                        synthesize_speech(text)
+                        synthesize_speech(text, self.response_voice_dropdown_value)
                     )
 
     def update_table(self) -> None:

@@ -33,31 +33,6 @@ TTS_URL: str = os.getenv("TTS_URL")  # URL for Text to Speech service
 TTS_MODEL: str = os.getenv("TTS_MODEL")  # Text to Speech model
 STT_MODEL: str = os.getenv("STT_MODEL")  # Speech to Text model
 
-# Create an authenticator object for Watson Assistant using the API key
-assistant_authenticator = IAMAuthenticator(ASSISTANT_API_KEY)
-# Instantiate the AssistantV2 object with the authenticator and version information
-assistant = AssistantV2(version="2023-06-15", authenticator=assistant_authenticator)
-# Set the service URL for Watson Assistant
-assistant.set_service_url(ASSISTANT_URL)
-# Disable SSL verification (use with caution in production environments)
-assistant.set_disable_ssl_verification(True)
-
-# Create an authenticator object for Speech to Text using the API key
-stt_authenticator = IAMAuthenticator(STT_API_KEY)
-# Instantiate the SpeechToTextV1 object with the authenticator
-speech_to_text = SpeechToTextV1(authenticator=stt_authenticator)
-# Set the service URL for Speech to Text
-speech_to_text.set_service_url(STT_URL)
-speech_to_text.set_disable_ssl_verification(True)
-
-# Create an authenticator object for Text to Speech using the API key
-tts_authenticator = IAMAuthenticator(TTS_API_KEY)
-# Instantiate the TextToSpeechV1 object with the authenticator
-text_to_speech = TextToSpeechV1(authenticator=tts_authenticator)
-# Set the service URL for Text to Speech
-text_to_speech.set_service_url(TTS_URL)
-text_to_speech.set_disable_ssl_verification(True)
-
 
 def transcribe_audio(encoded_audio: str) -> str:
     """
@@ -69,6 +44,16 @@ def transcribe_audio(encoded_audio: str) -> str:
     Returns:
         str: Transcribed text from the audio.
     """
+    # Create an authenticator object for Speech to Text using the API key
+    stt_authenticator = IAMAuthenticator(STT_API_KEY)
+
+    # Instantiate the SpeechToTextV1 object with the authenticator
+    speech_to_text = SpeechToTextV1(authenticator=stt_authenticator)
+
+    # Set the service URL for Speech to Text
+    speech_to_text.set_service_url(STT_URL)
+    speech_to_text.set_disable_ssl_verification(True)
+
     # Decode the base64 encoded audio data
     audio_data = base64.b64decode(encoded_audio)
     # Open the audio data in binary mode and pass it to the Speech to Text service
@@ -99,6 +84,18 @@ def query_assistant(text: str, session_id: str) -> str:
     Returns:
         str: Response text from Watson Assistant.
     """
+    # Create an authenticator object for Watson Assistant using the API key
+    assistant_authenticator = IAMAuthenticator(ASSISTANT_API_KEY)
+
+    # Instantiate the AssistantV2 object with the authenticator and version information
+    assistant = AssistantV2(version="2023-06-15", authenticator=assistant_authenticator)
+
+    # Set the service URL for Watson Assistant
+    assistant.set_service_url(ASSISTANT_URL)
+
+    # Disable SSL verification (use with caution in production environments)
+    assistant.set_disable_ssl_verification(True)
+
     # Send the text input to Watson Assistant and get the response
     response = assistant.message(
         assistant_id=ASSISTANT_ID, session_id=session_id, input={"text": text}
@@ -111,19 +108,57 @@ def query_assistant(text: str, session_id: str) -> str:
     return assistant_response
 
 
-def synthesize_speech(text: str) -> str:
+def get_voices() -> List[str]:
+    """
+    Get list of all available voices for text to speech
+
+    Args:
+        None
+
+    Returns:
+        List[str]: Strings naming each available voice
+    """
+    # Create an authenticator object for Text to Speech using the API key
+    tts_authenticator = IAMAuthenticator(TTS_API_KEY)
+
+    # Instantiate the TextToSpeechV1 object with the authenticator
+    text_to_speech = TextToSpeechV1(authenticator=tts_authenticator)
+
+    # Set the service URL for Text to Speech
+    text_to_speech.set_service_url(TTS_URL)
+    text_to_speech.set_disable_ssl_verification(True)
+
+    voices = text_to_speech.list_voices().get_result()
+
+    plain_voices = [voice["name"] for voice in voices["voices"]]
+
+    return plain_voices
+
+
+def synthesize_speech(text: str, voice: str) -> str:
     """
     Convert text to speech using IBM Watson Text to Speech and return the audio as a base64 encoded string.
 
     Args:
         text (str): Text to convert to speech.
+        voice (str): Name of voice to use for text to speech
 
     Returns:
         str: Base64 encoded audio data.
     """
+    # Create an authenticator object for Text to Speech using the API key
+    tts_authenticator = IAMAuthenticator(TTS_API_KEY)
+
+    # Instantiate the TextToSpeechV1 object with the authenticator
+    text_to_speech = TextToSpeechV1(authenticator=tts_authenticator)
+
+    # Set the service URL for Text to Speech
+    text_to_speech.set_service_url(TTS_URL)
+    text_to_speech.set_disable_ssl_verification(True)
+
     # Send the text to the Text to Speech service and get the audio content
     response = text_to_speech.synthesize(
-        text, accept="audio/wav", voice=TTS_MODEL
+        text, accept="audio/wav", voice=voice
     ).get_result()
     # Encode the audio content as base64
     audio_base64 = base64.b64encode(response.content).decode("utf-8")
@@ -162,6 +197,18 @@ def create_session_id() -> str:
     Returns:
         str: Watson Assistant session ID.
     """
+    # Create an authenticator object for Watson Assistant using the API key
+    assistant_authenticator = IAMAuthenticator(ASSISTANT_API_KEY)
+
+    # Instantiate the AssistantV2 object with the authenticator and version information
+    assistant = AssistantV2(version="2023-06-15", authenticator=assistant_authenticator)
+
+    # Set the service URL for Watson Assistant
+    assistant.set_service_url(ASSISTANT_URL)
+
+    # Disable SSL verification (use with caution in production environments)
+    assistant.set_disable_ssl_verification(True)
+
     return assistant.create_session(assistant_id=ASSISTANT_ID).get_result()[
         "session_id"
     ]

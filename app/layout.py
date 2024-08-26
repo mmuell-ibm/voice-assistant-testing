@@ -1,5 +1,6 @@
 from dash import dcc, html, dash_table
 from typing import Dict, List
+from voice_utils import get_voices
 
 
 def create_layout(
@@ -92,8 +93,18 @@ def create_layout(
                             ),
                             dcc.Dropdown(
                                 id="voice-dropdown",
-                                placeholder="Voice",
+                                placeholder="User Voice",
                                 options=[],
+                            ),
+                            dcc.Dropdown(
+                                id="response-voice-dropdown",
+                                placeholder="Response Voice",
+                                options=[
+                                    {"label": voice, "value": voice}
+                                    for voice in get_voices()
+                                ],
+                                value="en-US_EmmaExpressive",
+                                clearable=False,
                             ),
                             dcc.ConfirmDialog(
                                 id="upload-popup",
