@@ -1,0 +1,212 @@
+/* styles.css */
+
+/* General background color for the entire page */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #2e2e2e; /* Darker background color to match the main container */
+    font-family: Arial, sans-serif; /* Apply the font family to the entire page */
+}
+
+/* Main container styling */
+#main-container {
+    padding: 20px;
+    background-color: #3c3c3c; /* Slightly lighter dark background */
+    color: #f5f5f5; /* Light text color */
+    border-radius: 8px;
+    margin: 20px auto; /* Center the container and add margins */
+    max-width: 1200px; /* Limit the width of the main container */
+}
+
+/* Header styling */
+#header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#main-header {
+    font-size: 2em;
+    margin: 0;
+    color: #e0e0e0; /* Lighter color for the main header */
+}
+
+#sub-header {
+    font-size: 1.2em;
+    margin: 10px 0 0 0;
+    color: #b0b0b0; /* Slightly lighter color for the subheader */
+}
+
+/* Section styling */
+.section {
+    margin-bottom: 20px;
+    padding: 20px; /* Added padding for better spacing */
+    border-radius: 8px;
+    background-color: #4a4a4a; /* Slightly lighter background for sections */
+}
+
+/* Title styling */
+.section-title {
+    font-size: 1.5em;
+    margin-bottom: 15px; /* Increased margin for spacing */
+    color: #e0e0e0; /* Lighter color for section titles */
+}
+
+/* Input controls */
+.input-controls {
+    margin-bottom: 15px; /* Increased margin for spacing */
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #555; /* Darker border color */
+    border-radius: 4px;
+    width: 200px;
+    background-color: #444; /* Darker background for input */
+    color: #f5f5f5; /* Light text color */
+}
+
+button {
+    padding: 10px 20px; /* Added padding for a better button appearance */
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin: 5px; /* Margin between buttons */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+/* Dropdown styling */
+#convo-path-dropdown, #voice-dropdown {
+    width: 100%;
+    margin: 15px 0; /* Increased margin for spacing */
+    background-color: #d3d3d3; /* Light gray background for dropdowns */
+    border: 1px solid #aaa; /* Light gray border */
+}
+
+/* Styling for selected option in dropdown */
+#convo-path-dropdown .Select-control, #voice-dropdown .Select-control {
+    color: #2e2e2e; /* Dark text color for selected option */
+    background-color: #ffffff; /* Background color for selected option */
+}
+
+/* Dropdown menu styling */
+.Select-menu-outer {
+    background-color: #4a4a4a; /* Background color for dropdown menu */
+    color: #2e2e2e; /* Dark text color for dropdown options */
+    border: 1px solid #555; /* Darker border for dropdown menu */
+}
+
+/* Dropdown option styling */
+.Select-option {
+    background-color: #3c3c3c; /* Background color for dropdown options */
+    color: #2e2e2e; /* Dark text color for dropdown options */
+}
+
+.Select-option--is-selected {
+    background-color: #007bff; /* Background color for selected option */
+    color: #ffffff; /* Text color for selected option */
+}
+
+.Select-option:hover {
+    background-color: #575757; /* Background color on hover for options */
+    color: #ffffff; /* Text color on hover for options */
+}
+
+/* Upload component styling */
+#voice-upload {
+    margin: 15px 0; /* Increased margin for spacing */
+    padding: 20px;
+    border: 2px dashed #007bff; /* Dashed border for drag-and-drop area */
+    border-radius: 8px;
+    background-color: #444; /* Darker background for upload area */
+    text-align: center;
+    color: #e0e0e0; /* Light text color */
+}
+
+#voice-upload:hover {
+    border-color: #0056b3; /* Darker border color on hover */
+}
+
+/* ConfirmDialog styling */
+#upload-popup {
+    display: none; /* Initially hidden, will be shown when needed */
+}
+
+/* DataTable styling */
+#table-container {
+    margin-top: 20px;
+    border: 1px solid #555; /* Darker border around the table container */
+    border-radius: 8px; /* Rounded corners for the container */
+    overflow-x: auto; /* Allows horizontal scrolling if needed */
+    background-color: #4a4a4a;
+}
+
+#table {
+    width: 100%;
+    background-color: #4a4a4a;
+    color: #2e2e2e; /* Dark text color for contrast */
+    border-collapse: collapse; /* Ensures that table borders are merged */
+    table-layout: fixed; /* Fixed table layout to prevent resizing */
+    border: 1px solid #ddd; /* Light border around the table */
+    font-family: Arial, sans-serif; /* Match the font family with the rest of the layout */
+}
+
+#table th, #table td {
+    padding: 12px; /* Padding for cells */
+    border: 1px solid #ccc; /* Light border for table cells */
+    text-overflow: ellipsis; /* Adds ellipsis (...) for overflow text */
+    overflow: hidden; /* Hides overflow text */
+    white-space: nowrap; /* Prevents text from wrapping to the next line */
+}
+
+#table th {
+    background-color: #007bff; /* Header background color */
+    color: #ffffff; /* Header text color */
+    text-align: left; /* Align header text to the left */
+    font-weight: bold; /* Bold text for headers */
+}
+
+#table tr:nth-child(even) {
+    background-color: #e9ecef; /* Alternating row colors */
+}
+
+#table tr:nth-child(odd) {
+    background-color: #ffffff; /* Alternating row colors */
+}
+
+/* Layout for sections in a row */
+#row-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Gap between sections */
+}
+
+/* Styling for section layout */
+#user-input-section, #convo-path-section, #voice-controls {
+    flex: 1;
+    min-width: 300px; /* Minimum width for responsive layout */
+}
+
+/* Center action buttons */
+#action-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+#action-buttons button {
+    margin: 5px; /* Margin between buttons */
+}
+
+/* Export section styling */
+#export-section, #table-buttons-section {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Center the export button */
+}
